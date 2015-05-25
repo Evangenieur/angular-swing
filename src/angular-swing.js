@@ -5,11 +5,13 @@ angular
     .directive('swingStack', function () {
         return {
             restrict: 'A',
-            scope: {},
-            controller: function () {
+            scope: {
+                config: '=',
+            },
+            controller: function ($scope) {
                 var stack;
 
-                stack = Swing.Stack();
+                stack = Swing.Stack($scope.config);
 
                 this.add = function (cardElement) {
                     return stack.createCard(cardElement);
