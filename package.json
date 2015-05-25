@@ -6,7 +6,7 @@
     "cards",
     "swipeable"
   ],
-  "version": "1.0.01",
+  "version": "1.0.02",
   "main": "src/angular-swing.js",
   "author": "Gajus Kuizinas <gk@anuary.com>",
   "repository": {
