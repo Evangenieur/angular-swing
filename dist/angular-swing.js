@@ -1,5 +1,5 @@
 /**
- * @version 1.0.0
+ * @version 1.0.01
  * @link https://github.com/gajus/angular-swing for the canonical source repository
  * @license https://github.com/gajus/angular-swing/blob/master/LICENSE BSD 3-Clause
  */
@@ -3740,10 +3740,11 @@ Card = function Card (stack, targetElement) {
 
     Card.appendToParent(targetElement);
 
-    eventEmitter.on('_panstart', function () {
+    eventEmitter.on('_panstart', function (e) {
         Card.appendToParent(targetElement);
 
         eventEmitter.trigger('dragstart', {
+            evt: e,
             target: targetElement
         });
     });
@@ -3756,6 +3757,7 @@ Card = function Card (stack, targetElement) {
         config.transform(targetElement, x, y, r);
 
         eventEmitter.trigger('dragmove', {
+            evt: e,
             target: targetElement,
             throwOutConfidence: config.throwOutConfidence(x, targetElement),
             throwDirection: x < 0 ? Card.DIRECTION_LEFT : Card.DIRECTION_RIGHT
@@ -3773,6 +3775,7 @@ Card = function Card (stack, targetElement) {
         }
 
         eventEmitter.trigger('dragend', {
+            evt: e,
             target: targetElement
         });
     });
@@ -3992,10 +3995,13 @@ Card.transform = function (element, x, y, r) {
  * @param {HTMLElement} element The target element.
  */
 Card.appendToParent = function (element) {
-    return;
     var parent = element.parentNode,
         siblings = dom.elementChildren(parent),
         targetIndex = siblings.indexOf(element);
+
+    if (element) {
+      return;
+    }
 
     if (targetIndex + 1 !== siblings.length) {
         parent.removeChild(element);
